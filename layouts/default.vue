@@ -44,7 +44,7 @@
           <div
             id="AccountMenu"
             v-if="isAccountMenu"
-            class="absolute bg-white w-[200px] text-[#333333] z-40 top-[38px] -left-[81px] border-x border-b"
+            class="absolute bg-white w-[220px] text-[#333333] z-40 top-[38px] -left-[100px] border-x border-b"
           >
             <div v-if="true">
               <div class="text-semibold text-[15px] my-4 px-3">
@@ -80,9 +80,7 @@
       </ul>
     </div>
     <div id="MainHeader" class="flex items-center w-full bg-white">
-      <div
-        class="flex lg:justify-start justify-between gap-10 max-w-[1150] w-full px-3 py-5 mx-auto"
-      >
+      <div class="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py-5 mx-auto">
         <NuxtLink to="/" class="min-w-[170px]">
           <img
             width="170"
@@ -135,21 +133,47 @@
           <button
             class="relative md:block hidden"
             @mouseenter="isCartHover = true"
-            @mouseleaver="isCartHover = false"
+            @mouseleave="isCartHover = false"
           >
             <span
-              class="absolute flex items-center justify-center -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w.[17px] text-xs text-white px-0.5 rounded-full"
+              class="absolute flex items-center justify-center -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full"
             >
               0
             </span>
+            <div class="min-w-[40px]">
+              <Icon
+                name="ph:shopping-cart-simple-light"
+                size="33"
+                :color="isCartHover ? '#FF4646' : ''"
+              />
+            </div>
           </button>
         </NuxtLink>
+
+        <button 
+                    @click="userStore.isMenuOverlay = true"
+                    class="md:hidden block rounded-full p-1.5 -mt-[4px] hover:bg-gray-200"
+                >
+                    <Icon name="radix-icons:hamburger-menu" size="33" />
+                </button>
       </div>
     </div>
   </div>
+  <Loading v-if="userStore.isLoading" />
+
+<div class="lg:pt-[150px] md:pt-[130px] pt-[80px]" />
+<!-- <slot /> -->
+
+<Footer v-if="!userStore.isLoading"/>
 </template>
 <script setup>
-let isAccountMenu = ref(false);
-let isSearching = ref(false);
-let searchItem = ref("");
+
+
+import { useUserStore} from '~/store/user';
+const userStore = useUserStore()
+let isAccountMenu = ref(false)
+let isCartHover = ref(false)
+let isSearching = ref(false)
+let searchItem = ref('')
+let items = ref(null)
 </script>
